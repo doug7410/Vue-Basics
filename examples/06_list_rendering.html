@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="card mt-5">
+            <h3 class="card-title card-header bg-info text-light text-center">06 - List Rendering</h3>
+            <div class="card-body">
+                <div v-for="product in products" :key="product.id">
+                    <hr>
+                    <p v-if="product.isOnSale" class="bg-success text-light-text-center">On Sale!</p>
+                    <p>Product Name: {{ product.name }}</p>
+                    <p>Description: {{ product.description }}</p>
+                    <p>Quantity in stock: {{ product.quantityInStock }}</p>
+                    <p>Sale Price {{ product.price }}</p>
+                    <hr>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      products: [
+        {
+          id: 1,
+          name: 'Super Widget',
+          quantityInStock: 10,
+          isOnSale: false,
+          price: '$19.95',
+          description: 'The original widget!'
+        },
+        {
+          id: 2,
+          name: 'Super Widget 2',
+          quantityInStock: 5,
+          isOnSale: true,
+          price: '$27.95',
+          description: 'Just like the Super Widget, but better!'
+        },
+        {
+          id: 3,
+          name: 'Budget Widget',
+          quantityInStock: 2,
+          isOnSale: false,
+          price: '$9.95',
+          description: 'This is a widget that will get the job done.'
+        }
+      ],
+    }
+  })
+</script>
+</body>
+</html>

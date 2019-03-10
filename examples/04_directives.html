@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="card mt-5">
+            <h3 class="card-title card-header bg-info text-light text-center">04 - Directives</h3>
+            <div class="card-body">
+                <div v-if="product.quantityInStock > 0">
+                    <p>Product Name: {{ product.name }}</p>
+
+                    <p v-show="showDescription">Description: {{ product.description }}</p>
+
+                    <p v-if="product.quantityInStock < 3 " class="bg-danger p-1">
+                        {{ product.quantityInStock }} left, we're almost sold out
+                    </p>
+
+                    <p v-else-if="product.quantityInStock >= 3 &&  product.quantityInStock <= 5" class="bg-warning p-1">
+                        {{ product.quantityInStock }} left, stock is running low
+                    </p>
+
+                    <p v-else class="bg-success p-1">
+                        {{ product.quantityInStock }} left
+                    </p>
+
+                    <p>On Sale? {{ product.isOnSale ? 'YES' : 'NO' }}</p>
+                    <p>Sale Price {{ product.price }}</p>
+                </div>
+
+                <div v-else>
+                    Sorry, the {{ product.name }} is out of stock.
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="m-3" style="width: 300px">
+        <div class="form-group">
+            <label>Quantity In Stock</label>
+            <input v-model="product.quantityInStock" type="text" class="form-control">
+        </div>
+        <div class="form-group form-check">
+            <input v-model="product.isOnSale" type="checkbox" class="form-check-input">
+            <label class="form-check-label">On Sale?</label>
+        </div>
+        <div class="form-group form-check">
+            <input v-model="showDescription" type="checkbox" class="form-check-input">
+            <label class="form-check-label">Show Description?</label>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      product: {
+        name: 'Super Widget',
+        quantityInStock: 1,
+        isOnSale: true,
+        price: '$19.95',
+        description: 'Heu. Calceuss favere! Toruss trabem in camerarius cubiculum! Bassus particulas ducunt ad boreas.'
+      },
+      showDescription: false
+    }
+  })
+</script>
+</body>
+</html>

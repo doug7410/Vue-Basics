@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+<div id="app">
+    <hello-world message="Hello Vue!"></hello-world>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js"></script>
+<script src="../Components/TestComponent.js"></script>
+<script>
+
+  // global Vue component
+  Vue.component('hello-world', {
+    template: `<div class="container">
+                    <div class="card mt-5">
+                        <h3 class="card-title card-header bg-info text-light text-center">
+                            02 - Vue component anatomy
+                        </h3>
+                        <div class="card-body">
+                            <p>First Name: {{ firstName }}</p>
+                            <p>Last Name: {{ lastName }}</p>
+                            <p>Message: {{ message }}</p>
+                            <p>Full Name: {{ fullName }}</p>
+                            <test-component></test-component>
+                        </div>
+                    </div>
+                </div>`,
+    components: { // components that can be used in the template
+      'test-component': TestComponent
+    },
+    data: function() { // must be a function that returns an object
+      return {
+        firstName: 'Doug',
+        lastName: 'Steinberg'
+      }
+    },
+    props: { // the parameters a component accepts
+      message: String
+    },
+    computed: { // returned cached values until dependencies change
+      fullName: function () {
+        return this.firstName +  ' ' + this.lastName
+      }
+    },
+    methods: {
+      sayHello: function (message) {
+        alert("Hello! Here is your message: \n\n" + message)
+      }
+    },
+    watch: {
+      // called when first name changes
+      firstName: function (value, oldValue) {
+        const message = 'Old firstName: ' +  oldValue + ' \nNew firstName: ' + value;
+        this.sayHello(message)
+      }
+    },
+  });
+
+  new Vue({
+    el: '#app',
+  })
+</script>
+</body>
+</html>

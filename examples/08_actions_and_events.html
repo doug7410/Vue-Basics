@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="./styles/cart-page.css">
+</head>
+<body>
+
+<div id="app">
+    <div class="mt-3 pr-5 pl-5">
+        <div class="card mt-5">
+            <h3 class="card-title card-header bg-info text-light text-center">08 - Actions - Shopping Cart Example</h3>
+            <div class="card-body">
+                <div class="row">
+                    <!--product list-->
+                    <div class="col-sm-7">
+                        <div v-for="product in products" :key="product.id" class="mb-2 card p-2">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <p v-if="product.isOnSale"
+                                       class="bg-success text-light on-sale">On Sale!</p>
+                                    <img
+                                            :src="product.thumbnailImage"
+                                            v-on:mouseover="modalImage = product.largeImage"
+                                            @mouseout="modalImage = null"
+                                            width="150"
+                                            height="150"
+                                    />
+                                </div>
+                                <div class="col-sm-8">
+                                    <p>Product Name: {{ product.name }}</p>
+                                    <p>Description: {{ product.description }}</p>
+                                    <p v-if="quantityLeft(product.id) <= 0" class="bg-danger p-1">
+                                        {{ quantityLeft(product.id) }} left, we're sold out
+                                    </p>
+                                    <p v-else-if="quantityLeft(product.id) < 3 " class="bg-danger p-1">
+                                        {{ quantityLeft(product.id) }} left, we're almost sold out
+                                    </p>
+                                    <p v-else-if="quantityLeft(product.id) >= 3 &&  quantityLeft(product.id) <= 5" class="bg-warning p-1">
+                                        {{ quantityLeft(product.id) }} left, stock is running low
+                                    </p>
+                                    <p v-else class="bg-success p-1">
+                                        {{ quantityLeft(product.id) }} left
+                                    </p>
+                                    <p>Sale Price {{ product.price }}</p>
+                                    <button @click="addToCart(product)"
+                                            :disabled="quantityLeft(product.id) <= 0"
+                                            class="btn btn-info btn-sm">
+                                        Add to card
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--shopping cart-->
+                    <div class="col-sm-5">
+                        <div class="card">
+                            <div class="card-header">
+                                Shopping Cart
+                            </div>
+                            <table class="table table-sm table-striped" v-if="cart.items.length">
+                                <tr>
+                                    <th>Name</th>
+                                    <th>Qty</th>
+                                    <th>Price</th>
+                                </tr>
+                                <tr v-for="item in cart.items" :key="item.id">
+                                    <td>
+                                        {{ item.name }}
+                                        <a href="#" @click.prevent="removeFromCart(item.id)">remove</a>
+                                    </td>
+                                    <td>
+                                        <input type="text"
+                                               :value="item.quantity"
+                                               class="form-control"
+                                               style="max-width: 45px"
+                                               @keyup.enter="updateQuantity($event, item.id)"
+                                        >
+                                    </td>
+                                    <td>{{ item.price }}</td>
+                                </tr>
+                                <tr>
+                                    <th>Total:</th>
+                                    <th></th>
+                                    <th>{{ cartTotal }}</th>
+                                </tr>
+                            </table>
+                            <div v-else class="p-4">
+                                <strong>Your cart is empty</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="custom-modal" v-if="modalImage">
+        <img :src="modalImage" width="500" height="500">
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js"></script>
+<script src="data/products.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    methods: {
+      addToCart: function (product) {
+        if (!this.findCartItemById(product.id)) {
+          const item = {
+            id: product.id,
+            quantity: 1,
+            name: product.name,
+            price: product.price
+          };
+          this.cart.items.push(item)
+        } else {
+          this.cart.items.forEach(function (item) {
+            if (item.id === product.id) {
+              item.quantity = item.quantity + 1
+            }
+          })
+        }
+      },
+      removeFromCart: function (id) {
+        this.cart.items.splice(this.findCartItemById(id).index, 1);
+      },
+      updateQuantity: function (e, id) {
+        const newQuantity = parseInt(e.target.value);
+        const cartItem = this.findCartItemById(id);
+        const product = this.findProductById(id);
+        cartItem.quantity = newQuantity;
+        product.quantityInStock = cartItem.quantity + product.quantityInStock - newQuantity;
+      },
+      quantityLeft: function (id) {
+        if (!this.findCartItemById(id)) {
+          return this.findProductById(id).quantityInStock
+        }
+
+        return this.findProductById(id).quantityInStock - this.findCartItemById(id).quantity
+      },
+      findProductById(id) {
+        for (let i = 0; i < this.products.length; i++) {
+          if (this.products[i].id === id) {
+            return this.products[i];
+          }
+        }
+      },
+      findCartItemById(id) {
+        for (let i = 0; i < this.cart.items.length; i++) {
+          if (this.cart.items[i].id === id) {
+            this.cart.items[i].index = i;
+            return this.cart.items[i];
+          }
+        }
+
+        return null
+      }
+    },
+    computed: {
+      cartTotal: function () {
+        if (!this.cart.items.length) {
+          return 0;
+        }
+
+        return this.cart.items.map(function (item) {
+          return item.price * item.quantity
+        }).reduce(function (accum, price) {
+          return accum + price
+        })
+      }
+    },
+    data: {
+      products: products,
+      cart: {
+        items: []
+      },
+      modalImage: null
+    }
+  })
+</script>
+</body>
+</html>

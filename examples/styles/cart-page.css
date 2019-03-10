@@ -1,0 +1,16 @@
+.custom-modal {
+    position: fixed;
+    width: 500px;
+    height: 500px;
+    top: 0;
+    right: 0;
+    background-color: #fff;
+    z-index: 999;
+    border: solid 1px #000;
+}
+
+.on-sale {
+    position: absolute;
+    width: 150px;
+    text-align: center;
+}

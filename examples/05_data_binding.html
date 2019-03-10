@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="card mt-5">
+            <h3 class="card-title card-header bg-info text-light text-center">05 - Data Binding</h3>
+            <div class="card-body">
+                <div>
+                    <p>Product Name: {{ product.name }}</p>
+                    <p>Description: {{ product.description }}</p>
+                    <p>Link <a v-bind:href="product.link">{{ product.link }}</a></p>
+                    <p> {{ product.quantityInStock }} in stock </p>
+                    <p :class="{'bg-success': product.isOnSale}">
+                        On Sale? {{ product.isOnSale ? 'YES' : 'NO' }}
+                    </p>
+                    <p>Sale Price {{ product.price }}</p>
+                    <button :disabled="product.quantityInStock <= 0" class="btn btn-primary">
+                        Add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: {
+      product: {
+        name: 'Super Widget',
+        quantityInStock: 12,
+        isOnSale: true,
+        price: '$19.95',
+        description: 'The original widget!',
+        link: 'https://en.wikipedia.org/wiki/Widget_(economics)'
+      },
+      showDescription: false
+    }
+  })
+</script>
+</body>
+</html>

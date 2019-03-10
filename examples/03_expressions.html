@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Basics</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+</head>
+<body>
+
+<div id="app">
+    <div class="container">
+        <div class="card mt-5">
+            <h3 class="card-title card-header bg-info text-light text-center">
+                03 - Expressions
+            </h3>
+            <div class="card-body">
+                <p>Product Name: {{ product.name }}</p>
+                <p> {{ product.quantityInStock + ' ' + product.name + 's in stock' }}</p>
+                <p>On Sale? {{ product.isOnSale ? 'YES' : 'NO' }}</p>
+                <p>Sale Price {{ product.getPrice() }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js"></script>
+<script>
+  new Vue({
+    el: '#app',
+    data: { // when using the root instance, data is an object, not a function that returns an object
+      product: {
+        name: 'Super Widget',
+        quantityInStock: 10,
+        isOnSale: true,
+        getPrice: function () {
+          return '$19.95'
+        }
+      }
+    }
+  })
+</script>
+</body>
+</html>

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Vue Basics</title>
+</head>
+<body>
+<div id="app">
+    <hello-world></hello-world>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.6.8/vue.js"></script>
+<script>
+
+    // register a Component gobaly
+  Vue.component('hello-world', {
+    data() {
+      return {
+        name: 'World!'
+      }
+    },
+    template: '<h1>Hello {{ name }}</h1>'
+  });
+
+  new Vue({
+    el: '#app',
+  })
+</script>
+</body>
+</html>
