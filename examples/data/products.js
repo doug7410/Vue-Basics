@@ -6,7 +6,7 @@ const products = [
     isOnSale: false,
     price: 1995,
     description: 'The original widget!',
-    thumbnailImage: 'https://picsum.photos/150/150?random',
+    thumbnailImage: 'https://picsum.photos/100/100?random',
     largeImage: 'https://picsum.photos/500/500?random'
   },
   {
@@ -16,7 +16,7 @@ const products = [
     isOnSale: true,
     price: 2795,
     description: 'Just like the Super Widget, but better!',
-    thumbnailImage: 'https://picsum.photos/150/150?random',
+    thumbnailImage: 'https://picsum.photos/100/100?random',
     largeImage: 'https://picsum.photos/500/500?random'
   },
   {
@@ -26,7 +26,7 @@ const products = [
     isOnSale: false,
     price: 995,
     description: 'This is a widget that will get the job done.',
-    thumbnailImage: 'https://picsum.photos/150/150?random',
+    thumbnailImage: 'https://picsum.photos/100/100?random',
     largeImage: 'https://picsum.photos/500/500?random'
   }
 ];

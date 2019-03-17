@@ -23,12 +23,12 @@ const ShoppingCart = {
                              @keyup.enter="$emit('update-quantity', $event.target.value, item.id)"
                       >
                   </td>
-                  <td>{{ item.price }}</td>
+                  <td>{{ item.price | money }}</td>
               </tr>
               <tr>
                   <th>Total:</th>
                   <th></th>
-                  <th>{{ cartTotal }}</th>
+                  <th>{{ cartTotal | money }}</th>
               </tr>
           </table>
           <div v-else class="p-4">

@@ -4,7 +4,7 @@ This is a set of examples for learning the basics of VueJS.
 
 To run this project:
  - `npm install`
- - `npm server.js`
+ - `npm run serve`
  - Visit the examples at [http://localhost:8080/](http://localhost:8080/)
  
 

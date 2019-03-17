@@ -9,8 +9,8 @@ const ProductTwo = {
                       :src="product.thumbnailImage"
                       @mouseover="$emit('show-modal')"
                       @mouseout="$emit('hide-modal')"
-                      width="150"
-                      height="150"
+                      width="100"
+                      height="100"
               />
           </div>
           <div class="col-sm-8">
@@ -28,7 +28,7 @@ const ProductTwo = {
               <p v-else class="bg-success p-1">
                   {{ quantityLeft }} left
               </p>
-              <p>Sale Price {{ product.price }}</p>
+              <p>Sale Price {{ product.price | money }}</p>
               <button @click="$emit('add-to-cart')"
                       :disabled="quantityLeft <= 0"
                       class="btn btn-info btn-sm">

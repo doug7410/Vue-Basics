@@ -50,6 +50,12 @@
 <script src="../Components/ProductTwo.js"></script>
 <script src="../Components/ShoppingCart.js"></script>
 <script>
+
+  Vue.filter('money', function (value) {
+    var dollars = value / 100;
+    return dollars.toLocaleString("en-US", {style:"currency", currency:"USD"});
+  });
+
   new Vue({
     el: '#app',
     methods: {
